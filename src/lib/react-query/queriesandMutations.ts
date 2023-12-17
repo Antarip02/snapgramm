@@ -1,4 +1,4 @@
-import { useQuery,useMutation,useQueryClient,useInfiniteQuery, } from "@tanstack/react-query";
+import { useQuery,useMutation,useQueryClient, useInfiniteQuery, } from "@tanstack/react-query";
 import { createUserAccount, signInAccount, signOutAccount,createPost, getRecentPosts, likePost, savePost, deleteSavedPost, getCurrentUser, getPostById, updatePost, deletePost, getUserPosts, getInfinitePosts, searchPosts, getUsers, updateUser, getUserById } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
 import { QUERY_KEYS } from "./queryKeys";
@@ -150,16 +150,18 @@ export const useSearchPosts = (searchTerm: string) => {
 export const useGetPosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-    queryFn:getInfinitePosts,
-    getNextPageParam: (lastPage) => {
+    queryFn: getInfinitePosts as any,
+    getNextPageParam: (lastPage: any) => {
       // If there's no data, there are no more pages.
       if (lastPage && lastPage.documents.length === 0) {
         return null;
       }
 
+      // Use the $id of the last document as the cursor.
       const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
       return lastId;
     },
+    initialPageParam: null,
   });
 };
 export const useGetUsers = (limit?: number) => {

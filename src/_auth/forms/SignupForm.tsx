@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,8 +15,6 @@ import { SignupValidation } from "@/lib/validation";
 import Loader from "@/components/shared/Loader";
 import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast"
-import { create } from "domain";
-import { createUserAccount } from "@/lib/appwrite/api";
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesandMutations";
 import { useUserContext } from "@/context/AuthContext";
 
